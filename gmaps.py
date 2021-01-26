@@ -181,6 +181,20 @@ def geolocation_api(apikey, reason=False, poc=False):
 		print(Fore.RED+"[X] NOT VULNERABLE GEOLOCATION API"+Style.RESET_ALL)
 		print(Fore.YELLOW+"[!] Reason: "+response.json()["error"]["message"]+Style.RESET_ALL) if reason is True else None
 
+def route(apikey, reason=False, poc=False):
+	url = 'https://roads.googleapis.com/v1/snapToRoads?path=-35.27801,149.12958|-35.28032,149.12907&interpolate=true&key='+apikey
+	response = requests.get(url)
+	if 'error' not in response.text:
+		print(Fore.CYAN+"[+] VULNERABLE ROUTE TO TRAVEL API"+Style.RESET_ALL)
+		print(Fore.MAGENTA+"PoC Link: "+url+Style.RESET_ALL) if poc is True else None
+		api = Fore.GREEN+"[-] Route to Travel API"+Style.RESET_ALL
+		price = Fore.CYAN+"$10"+Style.RESET_ALL
+		xxx = [api,price]
+		vuln.append(xxx)
+	else:
+		print(Fore.RED+"[X] NOT VULNERABLE ROUTE TO TRAVEL API"+Style.RESET_ALL)
+		print(Fore.YELLOW+"[!] Reason: "+response.json()["error"]["message"]+Style.RESET_ALL) if reason is True else None
+
 def speedlimit_api(apikey, reason=False, poc=False):
 	url = 'https://roads.googleapis.com/v1/speedLimits?path=38.75807927603043,-9.03741754643809&key='+apikey
 	response = requests.get(url)
@@ -331,6 +345,7 @@ def main():
 		timezone_api(args.apikey, args.reason, args.poc) if args.poc or args.reason else timezone_api(args.apikey)
 		nearest_roads(args.apikey, args.reason, args.poc) if args.poc or args.reason else nearest_roads(args.apikey)
 		geolocation_api(args.apikey, args.reason, args.poc) if args.poc or args.reason else geolocation_api(args.apikey)
+		route(args.apikey, args.reason, args.poc) if args.poc or args.reason else route(args.apikey)
 		speedlimit_api(args.apikey, args.reason, args.poc) if args.poc or args.reason else speedlimit_api(args.apikey)
 		place_details(args.apikey, args.reason, args.poc) if args.poc or args.reason else place_details(args.apikey)
 		nearby_search(args.apikey, args.reason, args.poc) if args.poc or args.reason else nearby_search(args.apikey)
