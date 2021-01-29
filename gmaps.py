@@ -356,8 +356,9 @@ def main():
 		if args.jsapi:
 			js_api(args.apikey)
 		print('\n')
-		tbl = columnar(vuln, heading, no_borders=True)
-		print(tbl)
+		if vuln:
+			tbl = columnar(vuln, heading, no_borders=True)
+			print(tbl)
 		print("*"*30)
 		print("Reference for up-to-date pricing:")
 		print("* https://cloud.google.com/maps-platform/pricing")
