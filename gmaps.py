@@ -221,7 +221,7 @@ def place_details(apikey, reason=False, poc=False):
 		vuln.append(xxx)
 	else:
 		print(Fore.RED+"[X] NOT VULNERABLE PLACE DETAILS API"+Style.RESET_ALL)
-		print(Fore.YELLOW+"[!] Reason: "+response.json()["error"]["message"]+Style.RESET_ALL) if reason is True else None
+		print(Fore.YELLOW+"[!] Reason: "+response.json()["error_message"]+Style.RESET_ALL) if reason is True else None
 
 def nearby_search(apikey, reason=False, poc=False):
 	url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=100&types=food&name=harbour&key='+apikey
