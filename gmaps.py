@@ -14,6 +14,20 @@ except ImportError:
 vuln = []
 heading = ["Results", "Costs per 1000 requests"]
 
+def safesearch_api(apikey, reason=False, poc=False):
+	url = 'https://safebrowsing.googleapis.com/v4/threatMatches:find?key='+apikey
+	response = requests.post(url, headers={"content-type":"application/json"})
+	if response.status_code == 200:
+		print(Fore.CYAN+"[+] VULNERABLE SAFESEARCH API"+Style.RESET_ALL)
+		print(Fore.MAGENTA+"PoC Link: "+url+Style.RESET_ALL) if poc is True else None
+		api = Fore.GREEN+"[-] SafeSearch API"+Style.RESET_ALL
+		price = Fore.CYAN+"$2"+Style.RESET_ALL
+		xxx = [api,price]
+		vuln.append(xxx)
+	else:
+		print(Fore.RED+"[X] NOT VULNERABLE SAFESEARCH API"+Style.RESET_ALL)
+		print(Fore.YELLOW+"[!] Reason: "+response.text+Style.RESET_ALL) if reason is True else None
+
 def staticmap_api(apikey, reason=False, poc=False):
 	url = 'https://maps.googleapis.com/maps/api/staticmap?center=45%2C10&zoom=7&size=400x400&key='+apikey
 	response = requests.get(url)
@@ -334,6 +348,7 @@ def main():
 	args = parser.parse_args()
 
 	if args.apikey:
+		safesearch_api(args.apikey, args.reason, args.poc) if args.poc or args.reason else safesearch_api(args.apikey)
 		staticmap_api(args.apikey, args.reason, args.poc) if args.poc or args.reason else staticmap_api(args.apikey)
 		streetview_api(args.apikey, args.reason, args.poc) if args.poc or args.reason else streetview_api(args.apikey)
 		directions_api(args.apikey, args.reason, args.poc) if args.poc or args.reason else directions_api(args.apikey)
